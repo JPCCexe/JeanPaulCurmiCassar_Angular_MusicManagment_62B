@@ -1,0 +1,127 @@
+{
+    "records": [
+        {
+            "id": 1,
+            "recordTitle": "Abbey Road",
+            "artist": "The Beatles",
+            "format": "Vinyl",
+            "genre": "Rock",
+            "releaseYear": 1969,
+            "price": 29.99,
+            "stockQuantity": 5,
+            "customerId": "12345A",
+            "customerFirstName": "John",
+            "customerLastName": "Smith",
+            "customerContact": "79123456",
+            "customerEmail": "john.smith@example.com"
+        },
+        {
+            "id": 2,
+            "recordTitle": "Thriller",
+            "artist": "Michael Jackson",
+            "format": "CD",
+            "genre": "Pop",
+            "releaseYear": 1982,
+            "price": 19.99,
+            "stockQuantity": 2,
+            "customerId": "67890B",
+            "customerFirstName": "Jane",
+            "customerLastName": "Doe",
+            "customerContact": "79987654",
+            "customerEmail": "jane.doe@example.com"
+        },
+        {
+            "id": 3,
+            "recordTitle": "Kind of Blue",
+            "artist": "Miles Davis",
+            "format": "Vinyl",
+            "genre": "Jazz",
+            "releaseYear": 1959,
+            "price": 34.99,
+            "stockQuantity": 0,
+            "customerId": "11223C",
+            "customerFirstName": "Bob",
+            "customerLastName": "Wilson",
+            "customerContact": "79555444",
+            "customerEmail": "bob.wilson@example.com"
+        },
+        {
+            "id": 4,
+            "recordTitle": "Back in Black",
+            "artist": "AC/DC",
+            "format": "Vinyl",
+            "genre": "Rock",
+            "releaseYear": 1980,
+            "price": 27.99,
+            "stockQuantity": 8,
+            "customerId": "44556D",
+            "customerFirstName": "Alice",
+            "customerLastName": "Johnson",
+            "customerContact": "79666777",
+            "customerEmail": "alice.johnson@example.com"
+        },
+        {
+            "id": 5,
+            "recordTitle": "The Dark Side of the Moon",
+            "artist": "Pink Floyd",
+            "format": "CD",
+            "genre": "Rock",
+            "releaseYear": 1973,
+            "price": 22.99,
+            "stockQuantity": 3,
+            "customerId": "77889E",
+            "customerFirstName": "Charlie",
+            "customerLastName": "Brown",
+            "customerContact": "79888999",
+            "customerEmail": "charlie.brown@example.com"
+        }
+    ],
+    "formats": [
+        {
+            "id": 1,
+            "name": "Vinyl"
+        },
+        {
+            "id": 2,
+            "name": "CD"
+        }
+    ],
+    "genres": [
+        {
+            "id": 1,
+            "name": "Rock"
+        },
+        {
+            "id": 2,
+            "name": "Pop"
+        },
+        {
+            "id": 3,
+            "name": "Jazz"
+        },
+        {
+            "id": 4,
+            "name": "Classical"
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "email": "salesperson@test.com",
+            "password": "pass123",
+            "role": "Salesperson"
+        },
+        {
+            "id": 2,
+            "email": "manager@test.com",
+            "password": "pass123",
+            "role": "Store Manager"
+        },
+        {
+            "id": 3,
+            "email": "admin@test.com",
+            "password": "pass123",
+            "role": "System Admin"
+        }
+    ]
+}
