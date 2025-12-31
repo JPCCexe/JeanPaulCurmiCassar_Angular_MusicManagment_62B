@@ -1,1 +1,38 @@
-<p>records-list works!</p>
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary">Music Records</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow-sm">
+            <thead style="background-color: #495057; color: white;">
+                <tr>
+                    <th class="py-3">ID</th>
+                    <th class="py-3">Customer ID</th>
+                    <th class="py-3">Customer Last Name</th>
+                    <th class="py-3">Format</th>
+                    <th class="py-3">Genre</th>
+                    <th class="py-3">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let record of records">
+                    <td class="align-middle">{{ record.id }}</td>
+                    <td class="align-middle">{{ record.customerId || 'N/A' }}</td>
+                    <td class="align-middle">{{ record.customerLastName || 'N/A' }}</td>
+                    <td class="align-middle">{{ record.format }}</td>
+                    <td class="align-middle">{{ record.genre }}</td>
+                    <td class="align-middle">
+                        <button class="btn btn-info btn-sm me-2" (click)="viewDetails(record.id)">
+                            View
+                        </button>
+                        <button class="btn btn-warning btn-sm me-2" (click)="editRecord(record.id)">
+                            Update
+                        </button>
+                        <button class="btn btn-danger btn-sm" (click)="deleteRecord(record.id)">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
