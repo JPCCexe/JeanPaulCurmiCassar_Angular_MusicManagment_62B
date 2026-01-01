@@ -1,21 +1,6 @@
 {
   "records": [
     {
-      "id": "1",
-      "recordTitle": "Thriller",
-      "artist": "Michael Jackson",
-      "format": "CD",
-      "genre": "Pop",
-      "releaseYear": 1982,
-      "price": 19.99,
-      "stockQuantity": 2,
-      "customerId": "67890B",
-      "customerFirstName": "Jane",
-      "customerLastName": "Doe",
-      "customerContactNumber": "79987654",
-      "customerEmail": "jane.doe@example.com"
-    },
-    {
       "id": "2",
       "recordTitle": "Bobbies Dan",
       "artist": "Donal Trump",

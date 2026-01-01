@@ -12,6 +12,8 @@ import { Record } from '../../models/record.dto';
   styleUrl: './add-record.css',
 })
 export class AddRecord implements OnInit {
+
+  // Initialising empty record objects
   protected record: Record = {
     recordTitle: '',
     artist: '',
@@ -27,6 +29,7 @@ export class AddRecord implements OnInit {
     customerEmail: ''
   };
 
+  // Storing format and genre options
   protected formats: any[] = [];
   protected genres: any[] = [];
 
@@ -35,11 +38,14 @@ export class AddRecord implements OnInit {
     private router: Router
   ) { }
 
+  // Load dropdown data on component initialization
   ngOnInit(): void {
     this.loadFormats();
     this.loadGenres();
   }
 
+
+  // getting avaialable formats from API
   loadFormats(): void {
     this.recordsService.getFormats().subscribe({
       next: (data) => {
@@ -51,6 +57,7 @@ export class AddRecord implements OnInit {
     });
   }
 
+  // getting avaialable genres from API
   loadGenres(): void {
     this.recordsService.getGenres().subscribe({
       next: (data) => {
@@ -73,6 +80,7 @@ export class AddRecord implements OnInit {
     });
   }
 
+  //Go back to the record list route
   onCancel(): void {
     this.router.navigate(['/records']);
   }

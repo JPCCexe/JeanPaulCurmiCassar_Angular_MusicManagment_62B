@@ -34,11 +34,15 @@
                             <button class="btn btn-sm btn-outline-secondary me-1" (click)="viewDetails(record.id)">
                                 View
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary me-1" (click)="editRecord(record.id)">
+                            <!-- disabled if user cant update -->
+                            <button class="btn btn-sm btn-outline-secondary me-1" (click)="editRecord(record.id)"
+                                [disabled]="!canUpdate()">
                                 Edit
                             </button>
+
+                            <!-- disabled if user cant delete -->
                             <button class="btn btn-sm btn-outline-secondary text-danger"
-                                (click)="deleteRecord(record.id)">
+                                (click)="deleteRecord(record.id)" [disabled]="!canDelete()">
                                 Delete
                             </button>
                         </td>

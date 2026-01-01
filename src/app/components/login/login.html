@@ -1,1 +1,40 @@
-<p>login Component works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="text-center fw-bold mb-4">Login</h2>
+
+                    <!-- Error Message -->
+                    <div *ngIf="errorMessage" class="alert alert-danger">
+                        {{ errorMessage }}
+                    </div>
+
+                    <form (ngSubmit)="onLogin()">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input [(ngModel)]="email" name="email" type="email" class="form-control"
+                                placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Password</label>
+                            <input [(ngModel)]="password" name="password" type="password" class="form-control"
+                                placeholder="Enter your password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark w-100">Login</button>
+                    </form>
+
+                    <!-- Test credentials hint -->
+                    <div class="mt-4 text-center text-muted small">
+                        <p class="mb-1">Test accounts:</p>
+                        <p class="mb-0">salesperson@test.com / pass123</p>
+                        <p class="mb-0">manager@test.com / pass123</p>
+                        <p class="mb-0">admin@test.com / pass123</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

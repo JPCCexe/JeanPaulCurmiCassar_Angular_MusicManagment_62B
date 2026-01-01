@@ -13,10 +13,18 @@ export class RecordsService {
 
   constructor(private http: HttpClient) { }
 
+  // Get all records from API
   getRecords(): Observable<Record[]> {
     return this.http.get<Record[]>(this.apiUrl);
   }
 
+  // Get single record by ID
+  // For the View of the Records
+  getRecordById(id: string): Observable<Record> {
+    return this.http.get<Record>(`${this.apiUrl}/${id}`);
+  }
+
+  // Add new record with generated sequential id
   addRecord(record: Record): Observable<Record> {
     // Automatically generate sequential ID
     return this.getRecords().pipe(
@@ -31,6 +39,7 @@ export class RecordsService {
     );
   }
 
+  // Delete record by id
   deleteRecord(id: number | string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
@@ -46,6 +55,12 @@ export class RecordsService {
 
   getGenres(): Observable<any[]> {
     return this.http.get<any[]>('http://localhost:3000/genres');
+  }
+
+  //For Login.ts
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/users');
   }
 
 }
