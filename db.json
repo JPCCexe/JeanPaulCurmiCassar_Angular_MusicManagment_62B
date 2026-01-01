@@ -1,7 +1,7 @@
 {
   "records": [
     {
-      "id": "2",
+      "id": "1",
       "recordTitle": "Thriller",
       "artist": "Michael Jackson",
       "format": "CD",
@@ -16,49 +16,19 @@
       "customerEmail": "jane.doe@example.com"
     },
     {
-      "id": "3",
-      "recordTitle": "Kind of Blue",
-      "artist": "Miles Davis",
-      "format": "Vinyl",
-      "genre": "Jazz",
-      "releaseYear": 1959,
-      "price": 34.99,
-      "stockQuantity": 0,
-      "customerId": "11223C",
-      "customerFirstName": "Bob",
-      "customerLastName": "Wilson",
-      "customerContactNumber": "79555444",
-      "customerEmail": "bob.wilson@example.com"
-    },
-    {
-      "id": "4",
-      "recordTitle": "Back in Black",
-      "artist": "AC/DC",
+      "id": "2",
+      "recordTitle": "Bobbies Dan",
+      "artist": "Donal Trump",
       "format": "Vinyl",
       "genre": "Rock",
-      "releaseYear": 1980,
-      "price": 27.99,
-      "stockQuantity": 8,
-      "customerId": "44556D",
-      "customerFirstName": "Alice",
-      "customerLastName": "Johnson",
-      "customerContactNumber": "79666777",
-      "customerEmail": "alice.johnson@example.com"
-    },
-    {
-      "id": "5",
-      "recordTitle": "The Dark Side of the Moon",
-      "artist": "Pink Floyd",
-      "format": "CD",
-      "genre": "Rock",
-      "releaseYear": 1973,
-      "price": 22.99,
-      "stockQuantity": 3,
-      "customerId": "77889E",
-      "customerFirstName": "Charlie",
-      "customerLastName": "Brown",
-      "customerContactNumber": "79888999",
-      "customerEmail": "charlie.brown@example.com"
+      "releaseYear": 1998,
+      "price": 11,
+      "stockQuantity": 2,
+      "customerId": "123",
+      "customerFirstName": "Jhonny",
+      "customerLastName": "Poppet",
+      "customerContactNumber": "77357944",
+      "customerEmail": "curmicassarjeanpaul@gmail.com"
     }
   ],
   "formats": [

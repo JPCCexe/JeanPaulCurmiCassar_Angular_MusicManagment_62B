@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Record } from '../models/record.dto';
 
+import { switchMap, map } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,18 +18,34 @@ export class RecordsService {
   }
 
   addRecord(record: Record): Observable<Record> {
-    return this.http.post<Record>(this.apiUrl, record);
+    // Automatically generate sequential ID
+    return this.getRecords().pipe(
+      map(records => {
+        const maxId = records.reduce((max, r) => {
+          const numId = typeof r.id === 'string' ? parseInt(r.id, 10) : (r.id || 0);
+          return numId > max ? numId : max;
+        }, 0);
+        return { ...record, id: String(maxId + 1) };
+      }),
+      switchMap(recordWithId => this.http.post<Record>(this.apiUrl, recordWithId))
+    );
   }
 
-  deleteRecord(id: string): Observable<void> {
+  deleteRecord(id: number | string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getRecordById(id: string): Observable<Record> {
-    return this.http.get<Record>(`${this.apiUrl}/${id}`);
-  }
-
-  updateRecord(id: string, record: Record): Observable<Record> {
+  updateRecord(id: number | string, record: Record): Observable<Record> {
     return this.http.put<Record>(`${this.apiUrl}/${id}`, record);
   }
+
+  // For The Add Records
+  getFormats(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/formats');
+  }
+
+  getGenres(): Observable<any[]> {
+    return this.http.get<any[]>('http://localhost:3000/genres');
+  }
+
 }

@@ -1,5 +1,5 @@
 export interface Record {
-    id: string;
+    id?: string;
     recordTitle: string;
     artist: string;
     format: string;

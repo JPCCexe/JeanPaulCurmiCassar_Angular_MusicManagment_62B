@@ -30,16 +30,20 @@ export class RecordsList implements OnInit {
     });
   }
 
-  viewDetails(id: string): void {
-    this.router.navigate(['/records', id]);
+  viewDetails(id: string | undefined): void {
+    if (id) {
+      this.router.navigate(['/records', id]);
+    }
   }
 
-  editRecord(id: string): void {
-    this.router.navigate(['/records', id, 'edit']);
+  editRecord(id: string | undefined): void {
+    if (id) {
+      this.router.navigate(['/records', id, 'edit']);
+    }
   }
 
-  deleteRecord(id: string): void {
-    if (confirm('Are you sure you want to delete this record?')) {
+  deleteRecord(id: string | undefined): void {
+    if (id && confirm('Are you sure you want to delete this record?')) {
       this.recordsService.deleteRecord(id).subscribe({
         next: () => {
           this.loadRecords();

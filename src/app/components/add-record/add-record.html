@@ -1,1 +1,99 @@
-<p>add-record works!</p>
+<div class="container mt-5 mb-5">
+    <h2 class="text-dark fw-bold mb-4">Add New Record</h2>
+
+    <form (ngSubmit)="onSubmit()">
+        <div class="card border-0 shadow-sm p-4">
+
+            <!-- Record Details -->
+            <h5 class="text-muted mb-3">Record Details</h5>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Record Title</label>
+                    <input [(ngModel)]="record.recordTitle" name="recordTitle" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Artist</label>
+                    <input [(ngModel)]="record.artist" name="artist" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Format</label>
+                    <select [(ngModel)]="record.format" name="format" class="form-select" required>
+                        <option value="">Select format</option>
+                        <option *ngFor="let format of formats" [value]="format.name">
+                            {{ format.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Genre</label>
+                    <select [(ngModel)]="record.genre" name="genre" class="form-select" required>
+                        <option value="">Select genre</option>
+                        <option *ngFor="let genre of genres" [value]="genre.name">
+                            {{ genre.name }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Release Year</label>
+                    <input [(ngModel)]="record.releaseYear" name="releaseYear" type="number" class="form-control"
+                        required>
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">Price (€)</label>
+                    <input [(ngModel)]="record.price" name="price" type="number" step="0.01" class="form-control"
+                        required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Stock Quantity</label>
+                    <input [(ngModel)]="record.stockQuantity" name="stockQuantity" type="number" class="form-control"
+                        required>
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Customer Details -->
+            <h5 class="text-muted mb-3 mt-3">Customer Details (Optional)</h5>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                    <label class="form-label">Customer ID</label>
+                    <input [(ngModel)]="record.customerId" name="customerId" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">First Name</label>
+                    <input [(ngModel)]="record.customerFirstName" name="customerFirstName" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Last Name</label>
+                    <input [(ngModel)]="record.customerLastName" name="customerLastName" class="form-control">
+                </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label class="form-label">Contact Number</label>
+                    <input [(ngModel)]="record.customerContactNumber" name="customerContactNumber" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input [(ngModel)]="record.customerEmail" name="customerEmail" type="email" class="form-control">
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-dark">Add Record</button>
+                <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+            </div>
+
+        </div>
+    </form>
+</div>
