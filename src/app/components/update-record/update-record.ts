@@ -12,28 +12,28 @@ import { Record } from '../../models/record.dto';
   styleUrl: './update-record.css',
 })
 export class UpdateRecord implements OnInit {
-
-  // Initialising empty record objects
+  // form data
   record: Record = {
-    recordTitle: '',
+    title: '',
     artist: '',
     format: '',
     genre: '',
     releaseYear: 0,
     price: 0,
-    stockQuantity: 0,
+    stockQty: 0,
     customerId: '',
     customerFirstName: '',
     customerLastName: '',
-    customerContactNumber: '',
+    customerContact: '',
     customerEmail: ''
   };
 
+  // dropdown options
+  formats: string[] = [];
+  genres: string[] = [];
 
-  // Storing dropdown options and record id
-  formats: any[] = [];
-  genres: any[] = [];
-  recordId: string = '';
+  // store record id
+  recordId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,66 +41,49 @@ export class UpdateRecord implements OnInit {
     private recordsService: RecordsService
   ) { }
 
-
-  // laod reco data and dropdown option ON initilise 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.recordId = id;
-      this.loadRecord(id);
+      this.recordId = Number(id);
+      this.loadRecord(this.recordId);
       this.loadFormats();
       this.loadGenres();
     }
   }
 
-  // get existing record data from API
-  loadRecord(id: string): void {
+  // load record data
+  loadRecord(id: number): void {
     this.recordsService.getRecordById(id).subscribe({
-      next: (data) => {
-        this.record = data;
-      },
-      error: (error) => {
-        console.error('Error loading record:', error);
-      }
+      next: (data) => this.record = data,
+      error: (error) => console.error('Error loading record:', error)
     });
   }
 
-  // get existing formats data from API
+  // load formats
   loadFormats(): void {
     this.recordsService.getFormats().subscribe({
-      next: (data) => {
-        this.formats = data;
-      },
-      error: (error) => {
-        console.error('Error loading formats:', error);
-      }
+      next: (data) => this.formats = data,
+      error: (error) => console.error('Error loading formats:', error)
     });
   }
 
-  // get existing genres data from API
+  // load genres
   loadGenres(): void {
     this.recordsService.getGenres().subscribe({
-      next: (data) => {
-        this.genres = data;
-      },
-      error: (error) => {
-        console.error('Error loading genres:', error);
-      }
+      next: (data) => this.genres = data,
+      error: (error) => console.error('Error loading genres:', error)
     });
   }
 
-  // Submit updated record to API
+  // save changes
   onSubmit(): void {
     this.recordsService.updateRecord(this.recordId, this.record).subscribe({
-      next: () => {
-        this.router.navigate(['/records', this.recordId]);
-      },
-      error: (error) => {
-        console.error('Error updating record:', error);
-      }
+      next: () => this.router.navigate(['/records', this.recordId]),
+      error: (error) => console.error('Error updating record:', error)
     });
   }
 
+  // cancel
   onCancel(): void {
     this.router.navigate(['/records', this.recordId]);
   }

@@ -12,8 +12,8 @@
 
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <p class="mb-1 text-muted small">Record Title</p>
-                    <p class="fw-semibold">{{ record.recordTitle | lowercase }}</p>
+                    <p class="mb-1 text-muted small">Title</p>
+                    <p class="fw-semibold">{{ record.title | lowercase }}</p>
                 </div>
                 <div class="col-md-6">
                     <p class="mb-1 text-muted small">Artist</p>
@@ -43,7 +43,7 @@
             <div class="row mb-4">
                 <div class="col-md-6">
                     <p class="mb-1 text-muted small">Stock Quantity</p>
-                    <p class="fw-semibold">{{ record.stockQuantity }}</p>
+                    <p class="fw-semibold">{{ record.stockQty }} ({{ record.stockQty | stockStatus }})</p>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <p class="mb-1 text-muted small">Contact Number</p>
-                    <p class="fw-semibold">{{ record.customerContactNumber || '—' }}</p>
+                    <p class="fw-semibold">{{ record.customerContact || '—' }}</p>
                 </div>
                 <div class="col-md-6">
                     <p class="mb-1 text-muted small">Email</p>
@@ -80,21 +80,21 @@
 
         </div>
 
+        <!-- Buttons -->
         <div class="card-footer bg-light border-0 p-4">
             <div class="d-flex gap-2">
-
-                <!-- only enabled for manager and admin -->
-                <button class="btn btn-dark" (click)="editRecord()" [disabled]="!canUpdate()"> Edit Record </button>
-
-                <!-- only enabled for admin -->
-                <button class="btn btn-outline-danger" (click)="deleteRecord()" [disabled]="!canDelete()"> Delete Record
+                <button class="btn btn-dark" (click)="editRecord()" [disabled]="!canUpdate()">
+                    Edit Record
+                </button>
+                <button class="btn btn-outline-danger" (click)="deleteRecord()" [disabled]="!canDelete()">
+                    Delete Record
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- Loading state -->
     <div *ngIf="!record" class="text-center py-5">
         <p class="text-muted">Loading record...</p>
     </div>
-
 </div>

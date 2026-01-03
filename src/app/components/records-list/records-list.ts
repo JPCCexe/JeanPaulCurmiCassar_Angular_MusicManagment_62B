@@ -37,43 +37,39 @@ export class RecordsList implements OnInit {
     });
   }
 
-  // go to record details page
-  viewDetails(id: string | undefined): void {
+  // view record details
+  viewDetails(id: number | undefined): void {
     if (id) {
       this.router.navigate(['/records', id]);
     }
   }
 
-  // go to edit record page
-  editRecord(id: string | undefined): void {
-    if (id) {
+  // edit record
+  editRecord(id: number | undefined): void {
+    if (id && this.canUpdate()) {
       this.router.navigate(['/records', id, 'edit']);
     }
   }
 
-  // Delete record with confirmation
-  deleteRecord(id: string | undefined): void {
-    if (id && confirm('Are you sure you want to delete this record?')) {
+  // delete record
+  deleteRecord(id: number | undefined): void {
+    if (id && this.canDelete() && confirm('Are you sure you want to delete this record?')) {
       this.recordsService.deleteRecord(id).subscribe({
-        next: () => {
-          this.loadRecords();
-        },
-        error: (error) => {
-          console.error('Error deleting record:', error);
-        }
+        next: () => this.loadRecords(),
+        error: (error) => console.error('Error deleting record:', error)
       });
     }
   }
 
   //Roles
-  // check if user can update records
+  // check if user can update
   canUpdate(): boolean {
-    return this.userRole === 'Store Manager' || this.userRole === 'System Admin';
+    return this.userRole === 'manager' || this.userRole === 'admin';
   }
 
-  // check if user can delete records
+  // check if user can delete
   canDelete(): boolean {
-    return this.userRole === 'System Admin';
+    return this.userRole === 'admin';
   }
 
 

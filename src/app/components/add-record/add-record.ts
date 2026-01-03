@@ -13,74 +13,59 @@ import { Record } from '../../models/record.dto';
 })
 export class AddRecord implements OnInit {
 
-  // Initialising empty record objects
-  protected record: Record = {
-    recordTitle: '',
+  record: Record = {
+    title: '',
     artist: '',
     format: '',
     genre: '',
     releaseYear: 0,
     price: 0,
-    stockQuantity: 0,
+    stockQty: 0,
     customerId: '',
     customerFirstName: '',
     customerLastName: '',
-    customerContactNumber: '',
+    customerContact: '',
     customerEmail: ''
   };
 
-  // Storing format and genre options
-  protected formats: any[] = [];
-  protected genres: any[] = [];
+  // dropdown options
+  formats: string[] = [];
+  genres: string[] = [];
 
   constructor(
     private recordsService: RecordsService,
     private router: Router
   ) { }
 
-  // Load dropdown data on component initialization
   ngOnInit(): void {
     this.loadFormats();
     this.loadGenres();
   }
 
-
-  // getting avaialable formats from API
+  // load formats for dropdown
   loadFormats(): void {
     this.recordsService.getFormats().subscribe({
-      next: (data) => {
-        this.formats = data;
-      },
-      error: (error) => {
-        console.error('Error loading formats:', error);
-      }
+      next: (data) => this.formats = data,
+      error: (error) => console.error('Error loading formats:', error)
     });
   }
 
-  // getting avaialable genres from API
+  // load genres for dropdown
   loadGenres(): void {
     this.recordsService.getGenres().subscribe({
-      next: (data) => {
-        this.genres = data;
-      },
-      error: (error) => {
-        console.error('Error loading genres:', error);
-      }
+      next: (data) => this.genres = data,
+      error: (error) => console.error('Error loading genres:', error)
     });
   }
 
   onSubmit(): void {
     this.recordsService.addRecord(this.record).subscribe({
-      next: () => {
-        this.router.navigate(['/records']);
-      },
-      error: (error) => {
-        console.error('Error adding record:', error);
-      }
+      next: () => this.router.navigate(['/records']),
+      error: (error) => console.error('Error adding record:', error)
     });
   }
 
-  //Go back to the record list route
+  // cancel and go back
   onCancel(): void {
     this.router.navigate(['/records']);
   }

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecordsService } from '../../services/records';
 import { Record } from '../../models/record.dto';
+import { StockStatusPipe } from '../../pipes/stock-status-pipe';
 
 
 @Component({
   selector: 'app-record-details',
-  imports: [CommonModule],
+  imports: [CommonModule, StockStatusPipe],
   templateUrl: './record-details.html',
   styleUrl: './record-details.css',
 })
@@ -25,23 +26,17 @@ export class RecordDetails implements OnInit {
 
   // Initializing component and load record data
   ngOnInit(): void {
-    // get role from localStorage
     this.userRole = localStorage.getItem('userRole') || '';
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.loadRecord(id);
+      this.loadRecord(Number(id));
     }
   }
-
   // Getting record details from API
-  loadRecord(id: string): void {
+  loadRecord(id: number): void {
     this.recordsService.getRecordById(id).subscribe({
-      next: (data) => {
-        this.record = data;
-      },
-      error: (error) => {
-        console.error('Error loading record:', error);
-      }
+      next: (data) => this.record = data,
+      error: (error) => console.error('Error loading record:', error)
     });
   }
 
@@ -67,14 +62,14 @@ export class RecordDetails implements OnInit {
   }
 
   //Role
-  // check if user can edit
+  // check if user can update
   canUpdate(): boolean {
-    return this.userRole === 'Store Manager' || this.userRole === 'System Admin';
+    return this.userRole === 'manager' || this.userRole === 'admin';
   }
 
   // check if user can delete
   canDelete(): boolean {
-    return this.userRole === 'System Admin';
+    return this.userRole === 'admin';
   }
 
   goBack(): void {

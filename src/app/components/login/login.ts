@@ -23,25 +23,19 @@ export class Login {
   onLogin(): void {
     this.errorMessage = '';
 
-    this.recordsService.getUsers().subscribe({
-      next: (users) => {
-        const user = users.find(u => u.email === this.email && u.password === this.password);
+    this.recordsService.login(this.email, this.password).subscribe({
+      next: (user) => {
+        // save user info to localStorage
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', user.role);
+        localStorage.setItem('userEmail', user.email);
+        localStorage.setItem('userName', user.name);
 
-        if (user) {
-          // Saving hte info of the user to localStorage
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('userRole', user.role);
-          localStorage.setItem('userEmail', user.email);
-
-          // Redirect to records page
-          this.router.navigate(['/records']);
-        } else {
-          this.errorMessage = 'Invalid email or password';
-        }
+        // redirect to records page
+        this.router.navigate(['/records']);
       },
       error: (error) => {
-        console.error('Login error:', error);
-        this.errorMessage = 'An error occurred. Please try again.';
+        this.errorMessage = 'Invalid email or password';
       }
     });
   }

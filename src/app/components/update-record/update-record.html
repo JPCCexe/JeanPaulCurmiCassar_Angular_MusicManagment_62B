@@ -4,13 +4,13 @@
     <form (ngSubmit)="onSubmit()">
         <div class="card border-0 shadow-sm p-4">
 
-            <!-- Record Details -->
+            <!-- Record Info -->
             <h5 class="text-muted mb-3">Record Details</h5>
 
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">Record Title</label>
-                    <input [(ngModel)]="record.recordTitle" name="recordTitle" class="form-control" required>
+                    <label class="form-label">Title</label>
+                    <input [(ngModel)]="record.title" name="title" class="form-control" required>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Artist</label>
@@ -23,8 +23,8 @@
                     <label class="form-label">Format</label>
                     <select [(ngModel)]="record.format" name="format" class="form-select" required>
                         <option value="">Select format</option>
-                        <option *ngFor="let format of formats" [value]="format.name">
-                            {{ format.name }}
+                        <option *ngFor="let format of formats" [value]="format">
+                            {{ format }}
                         </option>
                     </select>
                 </div>
@@ -32,8 +32,8 @@
                     <label class="form-label">Genre</label>
                     <select [(ngModel)]="record.genre" name="genre" class="form-select" required>
                         <option value="">Select genre</option>
-                        <option *ngFor="let genre of genres" [value]="genre.name">
-                            {{ genre.name }}
+                        <option *ngFor="let genre of genres" [value]="genre">
+                            {{ genre }}
                         </option>
                     </select>
                 </div>
@@ -52,14 +52,13 @@
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Stock Quantity</label>
-                    <input [(ngModel)]="record.stockQuantity" name="stockQuantity" type="number" class="form-control"
-                        required>
+                    <input [(ngModel)]="record.stockQty" name="stockQty" type="number" class="form-control" required>
                 </div>
             </div>
 
             <hr>
 
-            <!-- Customer Details -->
+            <!-- Customer Info -->
             <h5 class="text-muted mb-3 mt-3">Customer Details (Optional)</h5>
 
             <div class="row g-3 mb-3">
@@ -80,7 +79,7 @@
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <label class="form-label">Contact Number</label>
-                    <input [(ngModel)]="record.customerContactNumber" name="customerContactNumber" class="form-control">
+                    <input [(ngModel)]="record.customerContact" name="customerContact" class="form-control">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Email</label>

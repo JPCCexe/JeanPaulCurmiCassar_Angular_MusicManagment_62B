@@ -1,15 +1,15 @@
 export interface Record {
-    id?: string;
-    recordTitle: string;
+    id?: number;
+    title: string;
     artist: string;
     format: string;
     genre: string;
     releaseYear: number;
     price: number;
-    stockQuantity: number;
+    stockQty: number;
     customerId: string;
     customerFirstName: string;
     customerLastName: string;
-    customerContactNumber: string;
+    customerContact: string;
     customerEmail: string;
 }
