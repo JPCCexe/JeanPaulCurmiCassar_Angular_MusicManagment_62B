@@ -4,6 +4,14 @@ import { Router } from '@angular/router';
 import { Record } from '../../models/record.dto';
 import { CommonModule } from '@angular/common';
 
+// FOR PDF
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+
+// FOR EXCEL
+import * as XLSX from 'xlsx';
+
+
 @Component({
   selector: 'app-records-list',
   imports: [CommonModule],
@@ -72,8 +80,72 @@ export class RecordsList implements OnInit {
     return this.userRole === 'admin';
   }
 
+  // check if user can add new records
+  canAdd(): boolean {
+    return this.userRole === 'manager' || this.userRole === 'admin';
+  }
+
 
   navigateToCreate(): void {
     this.router.navigate(['/records/add']);
   }
+
+  // Export records to PDF
+  exportToPDF(): void {
+    const doc = new jsPDF();
+
+    // TItle inside of PDF
+    doc.setFontSize(18);
+    doc.text('Music Records', 14, 20);
+
+    // Prepare table data
+    const tableData = this.records.map(record => [
+      String(record.id || ''),
+      record.title || '',
+      record.artist || '',
+      record.format || '',
+      record.genre || '',
+      '€' + record.price,
+      String(record.stockQty || 0)
+    ]);
+
+    // Creating the table
+    autoTable(doc, {
+      head: [['ID', 'Title', 'Artist', 'Format', 'Genre', 'Price', 'Stock']],
+      body: tableData,
+      startY: 30
+    });
+
+    // Save PDF
+    doc.save('music-records.pdf');
+  }
+
+  // Export records to Excel
+  exportToExcel(): void {
+    // Prepare data
+    const data = this.records.map(record => ({
+      'ID': record.id,
+      'Title': record.title,
+      'Artist': record.artist,
+      'Format': record.format,
+      'Genre': record.genre,
+      'Price': '€' + record.price,
+      'Stock': record.stockQty,
+      'Customer ID': record.customerId,
+      'Customer Name': record.customerFirstName + ' ' + record.customerLastName
+    }));
+
+    // Create worksheet
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+    // Create workbook
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Records');
+
+    // Save file
+    XLSX.writeFile(wb, 'music-records.xlsx');
+  }
+
+
+
 }

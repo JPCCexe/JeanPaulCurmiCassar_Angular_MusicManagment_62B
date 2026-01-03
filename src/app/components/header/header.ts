@@ -25,8 +25,8 @@ export class Header {
   //checking of the user can add records or not
   // Every login can add role just checking if user is logged in or not
   canAdd(): boolean {
-    // All roles can add records
-    return this.isLoggedIn();
+    const role = localStorage.getItem('userRole') || '';
+    return role === 'manager' || role === 'admin';
   }
 
   logout(): void {
