@@ -1,7 +1,7 @@
 <div class="container mt-5 mb-5">
     <h2 class="text-dark fw-bold mb-4">Add New Record</h2>
 
-    <form (ngSubmit)="onSubmit()">
+    <form #recordForm="ngForm" (ngSubmit)="onSubmit()">
         <div class="card border-0 shadow-sm p-4">
 
             <!-- Record Info -->
@@ -10,37 +10,52 @@
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Title</label>
-                    <input [(ngModel)]="record.title" name="title" class="form-control" required>
+                    <input [(ngModel)]="record.title" name="title" class="form-control" required #title="ngModel">
+                    @if (title.invalid && title.touched) {
+                    <div class="error-message">Title is required</div>
+                    }
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Artist</label>
-                    <input [(ngModel)]="record.artist" name="artist" class="form-control" required>
+                    <input [(ngModel)]="record.artist" name="artist" class="form-control" required #artist="ngModel">
+                    @if (artist.invalid && artist.touched) {
+                    <div class="error-message">Artist is required</div>
+                    }
                 </div>
             </div>
 
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <label class="form-label">Format</label>
-                    <select [(ngModel)]="record.format" name="format" class="form-select" required>
+                    <select [(ngModel)]="record.format" name="format" class="form-select" required #format="ngModel">
                         <option value="">Select format</option>
                         <option *ngFor="let format of formats" [value]="format">
                             {{ format }}
                         </option>
                     </select>
+                    @if (format.invalid && format.touched) {
+                    <div class="error-message">Format is required</div>
+                    }
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Genre</label>
-                    <select [(ngModel)]="record.genre" name="genre" class="form-select" required>
+                    <select [(ngModel)]="record.genre" name="genre" class="form-select" required #genre="ngModel">
                         <option value="">Select genre</option>
                         <option *ngFor="let genre of genres" [value]="genre">
                             {{ genre }}
                         </option>
                     </select>
+                    @if (genre.invalid && genre.touched) {
+                    <div class="error-message">Genre is required</div>
+                    }
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Release Year</label>
                     <input [(ngModel)]="record.releaseYear" name="releaseYear" type="number" class="form-control"
-                        required>
+                        required #releaseYear="ngModel">
+                    @if (releaseYear.invalid && releaseYear.touched) {
+                    <div class="error-message">Release year is required</div>
+                    }
                 </div>
             </div>
 
@@ -48,49 +63,102 @@
                 <div class="col-md-6">
                     <label class="form-label">Price (€)</label>
                     <input [(ngModel)]="record.price" name="price" type="number" step="0.01" class="form-control"
-                        required>
+                        required #price="ngModel">
+                    @if (price.invalid && price.touched) {
+                    <div class="error-message">Price is required</div>
+                    }
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Stock Quantity</label>
-                    <input [(ngModel)]="record.stockQty" name="stockQty" type="number" class="form-control" required>
+                    <input [(ngModel)]="record.stockQty" name="stockQty" type="number" class="form-control" required
+                        #stockQty="ngModel">
+                    @if (stockQty.invalid && stockQty.touched) {
+                    <div class="error-message">Stock quantity is required</div>
+                    }
                 </div>
             </div>
 
             <hr>
 
             <!-- Customer Info -->
-            <h5 class="text-muted mb-3 mt-3">Customer Details (Optional)</h5>
+            <h5 class="text-muted mb-3 mt-3">Customer Details</h5>
 
             <div class="row g-3 mb-3">
                 <div class="col-md-4">
                     <label class="form-label">Customer ID</label>
-                    <input [(ngModel)]="record.customerId" name="customerId" class="form-control">
+                    <input [(ngModel)]="record.customerId" name="customerId" class="form-control" required
+                        pattern="[0-9]+[a-zA-Z]" #customerId="ngModel">
+                    @if (customerId.invalid && customerId.touched) {
+                    <div class="error-message">
+                        @if (customerId.hasError('required')) {
+                        Customer ID is required
+                        }
+                        @if (customerId.hasError('pattern')) {
+                        Must be numbers + letter (e.g. 12345A)
+                        }
+                    </div>
+                    }
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">First Name</label>
-                    <input [(ngModel)]="record.customerFirstName" name="customerFirstName" class="form-control">
+                    <input [(ngModel)]="record.customerFirstName" name="customerFirstName" class="form-control" required
+                        #customerFirstName="ngModel">
+                    @if (customerFirstName.invalid && customerFirstName.touched) {
+                    <div class="error-message">First name is required</div>
+                    }
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Last Name</label>
-                    <input [(ngModel)]="record.customerLastName" name="customerLastName" class="form-control">
+                    <input [(ngModel)]="record.customerLastName" name="customerLastName" class="form-control" required
+                        #customerLastName="ngModel">
+                    @if (customerLastName.invalid && customerLastName.touched) {
+                    <div class="error-message">Last name is required</div>
+                    }
                 </div>
             </div>
 
             <div class="row g-3 mb-4">
                 <div class="col-md-6">
                     <label class="form-label">Contact Number</label>
-                    <input [(ngModel)]="record.customerContact" name="customerContact" class="form-control">
+                    <input [(ngModel)]="record.customerContact" name="customerContact" class="form-control" required
+                        pattern="[0-9]{8,}" #customerContact="ngModel">
+                    @if (customerContact.invalid && customerContact.touched) {
+                    <div class="error-message">
+                        @if (customerContact.hasError('required')) {
+                        Contact is required
+                        }
+                        @if (customerContact.hasError('pattern')) {
+                        Must be at least 8 digits
+                        }
+                    </div>
+                    }
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Email</label>
-                    <input [(ngModel)]="record.customerEmail" name="customerEmail" type="email" class="form-control">
+                    <input [(ngModel)]="record.customerEmail" name="customerEmail" type="email" class="form-control"
+                        required email #customerEmail="ngModel">
+                    @if (customerEmail.invalid && customerEmail.touched) {
+                    <div class="error-message">
+                        @if (customerEmail.hasError('required')) {
+                        Email is required
+                        }
+                        @if (customerEmail.hasError('email')) {
+                        Invalid email format
+                        }
+                    </div>
+                    }
                 </div>
             </div>
 
-            <!-- Buttons -->
+            <!-- Buttons 
+             Add Record is only clicable when all of the form is filled-->
             <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-dark">Add Record</button>
-                <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+                <button type="submit" class="btn btn-dark" [disabled]="recordForm.invalid">
+                    Add Record
+                </button>
+                <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
+                    Cancel
+                </button>
             </div>
 
         </div>

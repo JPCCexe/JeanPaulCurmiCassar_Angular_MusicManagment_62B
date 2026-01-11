@@ -9,7 +9,8 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 // FOR EXCEL
-import * as XLSX from 'xlsx';
+import * as ExcelJS from 'exceljs';
+
 
 
 @Component({
@@ -90,15 +91,24 @@ export class RecordsList implements OnInit {
     this.router.navigate(['/records/add']);
   }
 
-  // Export records to PDF
+  // Export records to PDF 
   exportToPDF(): void {
     const doc = new jsPDF();
 
-    // TItle inside of PDF
     doc.setFontSize(18);
     doc.text('Music Records', 14, 20);
 
-    // Prepare table data
+    // Define genre colors 
+    const genreColors: { [key: string]: [number, number, number] } = {
+      'Rock': [255, 200, 200],
+      'Pop': [200, 200, 255],
+      'Jazz': [255, 255, 200],
+      'Classical': [200, 255, 200],
+      'Electronic': [255, 200, 255],
+      'Hip-Hop': [255, 220, 200],
+      'default': [240, 240, 240]
+    };
+
     const tableData = this.records.map(record => [
       String(record.id || ''),
       record.title || '',
@@ -109,43 +119,71 @@ export class RecordsList implements OnInit {
       String(record.stockQty || 0)
     ]);
 
-    // Creating the table
+
     autoTable(doc, {
       head: [['ID', 'Title', 'Artist', 'Format', 'Genre', 'Price', 'Stock']],
       body: tableData,
-      startY: 30
+      startY: 30,
+      didParseCell: (data) => {
+
+        // Apply colors to body of the rows
+        if (data.section === 'body') {
+          const genre = this.records[data.row.index].genre || 'default';
+          const color = genreColors[genre] || genreColors['default'];
+          data.cell.styles.fillColor = color;
+        }
+      }
     });
 
-    // Save PDF
     doc.save('music-records.pdf');
   }
 
-  // Export records to Excel
-  exportToExcel(): void {
-    // Prepare data
-    const data = this.records.map(record => ({
-      'ID': record.id,
-      'Title': record.title,
-      'Artist': record.artist,
-      'Format': record.format,
-      'Genre': record.genre,
-      'Price': '€' + record.price,
-      'Stock': record.stockQty,
-      'Customer ID': record.customerId,
-      'Customer Name': record.customerFirstName + ' ' + record.customerLastName
-    }));
+  // export to Excel with color coding by genre
+  async exportToExcel(): Promise<void> {
+    // Setting colours for every genre 
+    const colors: { [key: string]: string } = {
+      'Rock': 'FFC8DCFF',
+      'Pop': 'FFFFC8DC',
+      'Jazz': 'FFFFFFC8',
+      'Hip-Hop': 'FFDCFFC8',
+      'Classical': 'FFE6DCFF',
+      'Electronic': 'FFFFDCC8',
+      'Reggae': 'FFC8FFE6',
+      'Alternative': 'FFF0F0F0'
+    };
 
-    // Create worksheet
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    // create workbook and worksheet
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Records');
 
-    // Create workbook
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Records');
+    // add headers for Columns
+    worksheet.addRow(['ID', 'Title', 'Artist', 'Format', 'Genre', 'Price', 'Stock']);
 
-    // Save file
-    XLSX.writeFile(wb, 'music-records.xlsx');
+    // add data with colors
+    this.records.forEach(record => {
+      const row = worksheet.addRow([
+        record.id,
+        record.title,
+        record.artist,
+        record.format,
+        record.genre,
+        '€' + record.price,
+        record.stockQty
+      ]);
+
+      // color row by genre
+      const color = colors[record.genre || ''] || 'FFFFFFFF';
+      row.eachCell(cell => {
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: color } };
+      });
+    });
+
+    // downloading excel file
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'music-records.xlsx';
+    link.click();
   }
-
-
-
 }

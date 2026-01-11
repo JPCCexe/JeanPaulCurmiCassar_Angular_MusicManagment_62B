@@ -24,7 +24,7 @@ export class RecordsService {
     return this.http.get<Record>(`${this.apiUrl}/records/${id}`);
   }
 
-  // Add new record (server generates ID automatically)
+  // Add new record
   addRecord(record: Record): Observable<Record> {
     return this.http.post<Record>(`${this.apiUrl}/records`, record);
   }
@@ -39,17 +39,17 @@ export class RecordsService {
     return this.http.put<Record>(`${this.apiUrl}/records/${id}`, record);
   }
 
-  // For The Add Records - get formats dropdown
+  // For The Add Records
   getFormats(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/formats`);
   }
 
-  // For The Add Records - get genres dropdown
+  // For The Add Records
   getGenres(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/genres`);
   }
 
-  // For Login - POST email and password
+  // For Login
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password });
   }
