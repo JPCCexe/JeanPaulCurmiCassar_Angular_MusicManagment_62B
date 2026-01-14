@@ -6,9 +6,7 @@
                     <h2 class="text-center fw-bold mb-4">Login</h2>
 
                     <!-- Error Message -->
-                    <div *ngIf="errorMessage" class="alert alert-danger">
-                        {{ errorMessage }}
-                    </div>
+                    <div *ngIf="errorMessage" class="alert alert-danger"> {{ errorMessage }} </div>
 
                     <form (ngSubmit)="onLogin()">
                         <div class="mb-3">
